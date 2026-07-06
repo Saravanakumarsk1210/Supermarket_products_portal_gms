@@ -1,0 +1,10 @@
+ProductCategoryID,CategoryName,Category_Description
+DGS01,Dry Grocery & Staples,"Everyday dry pantry essentials including rice, lentils, spices, flour, cooking oils, nuts, sugar, and salt. Core staples for South Asian, African, and Caribbean cooking."
+SNC02,Snacks & Confectionery,"Ready-to-eat snack foods and sweet treats including crisps, namkeen, biscuits, cookies, chocolates, candies, popcorn, and traditional Indian sweets and mithai."
+BEV03,Beverages,"All drinkable products including teas, coffees, soft drinks, fruit juices, energy drinks, malt drinks, syrups, cordials, and water. Covers both hot and cold drinks."
+FRP04,Fresh Produce,"Fresh, unprocessed fruits and vegetables including root vegetables, leafy greens, gourds, pods, exotic and specialty produce. Products sold fresh without packaging or preservation."
+FMR05,"Frozen, Meat & Ready-to-Cook","Frozen meat, poultry, fish and seafood, as well as chilled and ambient ready-to-cook and marinated products. Includes convenience meal kits and semi-prepared foods."
+CSP06,"Condiments, Sauces & Pickles","Flavour-enhancing accompaniments including pickles, chutneys, cooking sauces, ketchup, pastes, purees, jams, honey, spreads, and vinegar. Used to season, marinate, or accompany meals."
+DEC07,"Dairy, Eggs & Chilled","Refrigerated dairy products including milk powder, condensed milk, cheese, paneer, butter, yoghurt, and eggs. Core protein and dairy ingredients for cooking and consumption."
+HPC08,Household & Personal Care,"Non-food household and personal use products including toiletries, hair care, skin care, cosmetics, household cleaning supplies, laundry products, disposables, packaging, and over-the-counter medicines."
+BPN09,"Bakery, Pasta & Noodles","Baked goods and grain-based meal staples including bread, bakery items, noodles, pasta, breakfast cereals, oats, and canned and tinned food products."
