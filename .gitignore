@@ -18,4 +18,6 @@ Desktop.ini
 .DS_Store
 
 # Runtime uploads (product images from admin)
-frontend/uploads/
+frontend/uploads/*
+!frontend/uploads/products/
+!frontend/uploads/products/.gitkeep

@@ -1,15 +1,10 @@
-"""Upload category thumbnail images from 'My  categories' folder to Cloudinary."""
-import os, sys
-sys.path.insert(0, r"E:\SUPER_MARKET_V1")
+"""Upload category thumbnail images from data/source-images/categories/ to Cloudinary."""
 
-import cloudinary
-import cloudinary.uploader
+from __future__ import annotations
 
-cloudinary.config(
-    cloud_name="dgsnwhyah",
-    api_key="132541329763823",
-    api_secret="P_DCGb5ZysUbACdXVo3UlfUp6ds",
-)
+from app.config import get_settings
+from app.core.cloudinary_storage import upload_file_path
+from app.paths import CATEGORY_SOURCE_IMAGES_DIR
 
 CATEGORIES = [
     "dry-grocery-staples",
@@ -23,23 +18,35 @@ CATEGORIES = [
     "bakery-pasta-noodles",
 ]
 
-BASE = r"E:\SUPER_MARKET_V1\My  categories"
-results = {}
 
-for i, slug in enumerate(CATEGORIES, start=1):
-    fpath = os.path.join(BASE, f"{i}.png")
-    public_id = f"gms-world-foods/categories/{slug}"
-    print(f"[{i}/9] Uploading {fpath}  ->  {public_id}")
-    r = cloudinary.uploader.upload(
-        fpath,
-        public_id=public_id,
-        overwrite=True,
-        resource_type="image",
-    )
-    url = r["secure_url"]
-    results[i] = (slug, url)
-    print(f"      OK: {url}")
+def main() -> None:
+    settings = get_settings()
+    if not settings.cloudinary_configured:
+        raise SystemExit("Cloudinary is not configured in .env")
 
-print("\n--- UPLOAD COMPLETE ---")
-for idx, (slug, url) in results.items():
-    print(f"{idx}. {slug}: {url}")
+    if not CATEGORY_SOURCE_IMAGES_DIR.is_dir():
+        raise SystemExit(f"Category images folder not found: {CATEGORY_SOURCE_IMAGES_DIR}")
+
+    results: dict[int, tuple[str, str]] = {}
+    for i, slug in enumerate(CATEGORIES, start=1):
+        fpath = CATEGORY_SOURCE_IMAGES_DIR / f"{i}.png"
+        if not fpath.is_file():
+            print(f"[{i}/9] SKIP — missing {fpath.name}")
+            continue
+        print(f"[{i}/9] Uploading {fpath.name} -> categories/{slug}")
+        result = upload_file_path(
+            fpath,
+            asset_key=f"categories/{slug}",
+            folder=settings.cloudinary_folder,
+        )
+        url = result["secure_url"]
+        results[i] = (slug, url)
+        print(f"      OK: {url}")
+
+    print("\n--- UPLOAD COMPLETE ---")
+    for idx, (slug, url) in results.items():
+        print(f"{idx}. {slug}: {url}")
+
+
+if __name__ == "__main__":
+    main()

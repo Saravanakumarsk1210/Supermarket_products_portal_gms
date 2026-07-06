@@ -24,12 +24,18 @@ SUPER_MARKET_V1/
 │   ├── admin.html          # Admin dashboard
 │   ├── css/                # main.css, admin.css
 │   ├── js/                 # Customer + admin scripts
+│   ├── assets/             # Store photo, culture icons (fallback images)
 │   └── uploads/            # Local product image uploads (gitignored)
+├── data/                   # Source data (not served at runtime)
+│   ├── catalog/            # CSV files (categories, products, subcategories)
+│   └── source-images/      # Original images for one-off Cloudinary upload scripts
 ├── database/
 │   └── schema.sql          # PostgreSQL DDL reference
+├── scripts/                # Maintenance scripts (seed, upload images)
 ├── run.py                  # Start server
 ├── requirements.txt
-└── .env
+├── .env.example            # Copy to .env and fill in values
+└── .env                    # Local secrets (not committed)
 ```
 
 ## Setup & run (Windows CMD)

@@ -11,8 +11,9 @@ from app.core.catalog import invalidate_admin_site_cache
 from app.core.cloudinary_storage import upload_file_path
 from app.database import AsyncSessionLocal
 from app.models import SiteBanner
+from app.paths import HERO_BANNER_SOURCE_DIR
 
-BANNER_DIR = Path(__file__).resolve().parents[1] / "MY banners"
+BANNER_DIR = HERO_BANNER_SOURCE_DIR
 
 
 def _sort_key(path: Path) -> tuple[int, str]:

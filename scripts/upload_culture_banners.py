@@ -13,8 +13,9 @@ from app.core.culture_order import append_to_tail, load_all_cultures
 from app.core.db_indexes import ensure_performance_indexes
 from app.database import AsyncSessionLocal
 from app.models import CultureBanner
+from app.paths import CULTURE_BANNER_SOURCE_DIR
 
-CULTURE_DIR = Path(__file__).resolve().parents[1] / "My cultures"
+CULTURE_DIR = CULTURE_BANNER_SOURCE_DIR
 
 
 def _sort_key(path: Path) -> tuple[int, str]:
