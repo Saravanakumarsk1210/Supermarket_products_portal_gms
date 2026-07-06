@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal — GMS World Foods Ltd</title>
+    <link rel="icon" href="https://res.cloudinary.com/dgsnwhyah/image/upload/v1782933745/gms-world-foods/company-logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/admin.css?v=24">
+    <script>
+    (function () {
+        try {
+            var tokenKey = 'gms_admin_token_v2';
+            var userKey = 'gms_admin_user_v2';
+            var hasToken = sessionStorage.getItem(tokenKey) || localStorage.getItem(tokenKey);
+            var hasUser = sessionStorage.getItem(userKey) || localStorage.getItem(userKey);
+            if (hasToken && hasUser) {
+                document.documentElement.classList.add('admin-session');
+            }
+        } catch (e) {}
+    })();
+    </script>
+    <style>
+        html.admin-session #login-screen { display: none !important; }
+    </style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen" class="login-screen">
+    <div class="login-card">
+        <div class="login-logo">
+            <img src="https://res.cloudinary.com/dgsnwhyah/image/upload/v1782933745/gms-world-foods/company-logo.png" alt="GMS World Foods" width="64" height="64">
+            <h1>GMS World Foods</h1>
+            <p>Admin Portal</p>
+        </div>
+        <form id="login-form" novalidate>
+            <div class="form-group">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" placeholder="admin@gmsworldfoods.local" autocomplete="username" required>
+            </div>
+            <div class="form-group">
+                <label for="login-password">Password</label>
+                <div class="pass-wrap">
+                    <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" required>
+                    <button type="button" id="toggle-pass" aria-label="Show password"><i class="fa-solid fa-eye"></i></button>
+                </div>
+            </div>
+            <p id="login-error" class="login-error hidden"></p>
+            <button type="submit" class="btn-login">Sign In</button>
+            <p class="login-forgot"><a href="#" id="forgot-password">Forgot password?</a></p>
+        </form>
+    </div>
+</div>
+
+<!-- ACCESS DENIED -->
+<div id="access-denied" class="login-screen hidden">
+    <div class="login-card">
+        <div class="login-logo">
+            <i class="fa-solid fa-ban" style="font-size:3rem;color:#dc2626"></i>
+            <h1>Access Denied</h1>
+            <p>Your account does not have admin privileges.</p>
+        </div>
+        <a href="index.html" class="btn-login" style="display:block;text-align:center;text-decoration:none">Return to Store</a>
+    </div>
+</div>
+
+<!-- ADMIN SHELL -->
+<div id="admin-shell" class="admin-shell hidden">
+
+    <aside id="adm-sidebar" class="adm-sidebar">
+        <nav class="adm-nav">
+            <a href="#dashboard" class="adm-nav-link active" data-section="dashboard"><i class="fa-solid fa-chart-pie"></i><span>Dashboard</span></a>
+            <a href="#products" class="adm-nav-link" data-section="products"><i class="fa-solid fa-box-open"></i><span>Products</span></a>
+            <a href="#categories" class="adm-nav-link" data-section="categories"><i class="fa-solid fa-layer-group"></i><span>Categories &amp; Subcategories</span></a>
+            <a href="#spotlight" class="adm-nav-link" data-section="spotlight"><i class="fa-solid fa-wand-magic-sparkles"></i><span>Spotlight</span></a>
+            <a href="#banners" class="adm-nav-link" data-section="banners"><i class="fa-solid fa-images"></i><span>Banners &amp; Hero Slides</span></a>
+            <a href="#cultures" class="adm-nav-link" data-section="cultures"><i class="fa-solid fa-globe"></i><span>Cultures</span></a>
+            <a href="#testimonials" class="adm-nav-link" data-section="testimonials"><i class="fa-solid fa-quote-left"></i><span>Testimonials</span></a>
+            <a href="#contact-messages" class="adm-nav-link" data-section="contact-messages"><i class="fa-solid fa-inbox"></i><span>Contact Messages</span><span class="adm-nav-badge hidden" id="contact-unread-badge"></span></a>
+            <a href="#newsletter" class="adm-nav-link" data-section="newsletter"><i class="fa-solid fa-envelope"></i><span>Newsletter Subscribers</span></a>
+            <a href="#discounts" class="adm-nav-link" data-section="discounts"><i class="fa-solid fa-tags"></i><span>Discounts &amp; Offers</span></a>
+            <a href="#coupons" class="adm-nav-link" data-section="coupons"><i class="fa-solid fa-ticket"></i><span>Coupons</span></a>
+            <a href="#settings" class="adm-nav-link" data-section="settings"><i class="fa-solid fa-gear"></i><span>Store Settings</span></a>
+        </nav>
+        <div class="adm-sidebar-footer">v1.0.0 — GMS Admin</div>
+    </aside>
+
+    <header class="adm-header">
+        <div class="adm-header-left">
+            <button id="sidebar-toggle" class="adm-icon-btn" aria-label="Toggle sidebar"><i class="fa-solid fa-bars"></i></button>
+            <img src="https://res.cloudinary.com/dgsnwhyah/image/upload/v1782933745/gms-world-foods/company-logo.png" alt="GMS" width="36" height="36" class="adm-logo-img">
+            <div class="adm-header-brand">
+                <span class="adm-header-title">Admin Portal</span>
+                <span class="adm-header-subtitle">GMS World Foods</span>
+            </div>
+        </div>
+        <div class="adm-header-right">
+            <div class="adm-search-bar">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="search" id="global-search" placeholder="Search products…" title="Search products by name, brand, or ID" autocomplete="off">
+            </div>
+            <div id="session-warning" class="adm-session-warning hidden" title="Could not verify your session with the server">
+                <i class="fa-solid fa-triangle-exclamation"></i> Offline mode
+            </div>
+            <button class="adm-icon-btn" id="notif-btn" aria-label="Notifications">
+                <i class="fa-solid fa-bell"></i>
+                <span class="adm-badge hidden" id="notif-badge">0</span>
+            </button>
+            <a href="index.html" target="_blank" rel="noopener noreferrer" class="adm-header-btn" id="view-store-btn">
+                <i class="fa-solid fa-store"></i><span>View Store</span>
+            </a>
+            <button type="button" class="adm-header-btn" id="logout-btn">
+                <i class="fa-solid fa-right-from-bracket"></i><span>Logout</span>
+            </button>
+        </div>
+    </header>
+
+    <main id="adm-main" class="adm-main">
+
+        <!-- DASHBOARD -->
+        <section id="section-dashboard" class="adm-section">
+            <div class="adm-page-header">
+                <div>
+                    <h1>Dashboard Overview</h1>
+                    <p id="dashboard-date"></p>
+                </div>
+            </div>
+            <div class="kpi-grid kpi-grid--spotlight" id="kpi-grid"></div>
+            <div class="adm-card">
+                <div class="adm-card-header"><h3>Quick Actions</h3></div>
+                <div class="quick-actions">
+                    <button type="button" class="quick-action-btn" data-quick="product"><i class="fa-solid fa-plus"></i><span>Add New Product</span></button>
+                    <button type="button" class="quick-action-btn" data-quick="discount"><i class="fa-solid fa-percent"></i><span>Create Discount</span></button>
+                    <button type="button" class="quick-action-btn" data-quick="banner"><i class="fa-solid fa-image"></i><span>Add Banner</span></button>
+                    <button type="button" class="quick-action-btn" data-quick="newsletter"><i class="fa-solid fa-envelope-open-text"></i><span>View Newsletter List</span></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUCTS -->
+        <section id="section-products" class="adm-section hidden">
+            <div class="adm-page-header">
+                <div>
+                    <h1>Products</h1>
+                    <p id="products-subtitle">Loading…</p>
+                </div>
+                <div class="adm-page-actions">
+                    <button type="button" class="adm-btn adm-btn--blue" id="export-csv-btn"><i class="fa-solid fa-download"></i> Export CSV</button>
+                    <button type="button" class="adm-btn adm-btn--primary" id="add-product-btn"><i class="fa-solid fa-plus"></i> Add Product</button>
+                </div>
+            </div>
+            <div class="adm-card adm-filter-card">
+                <div class="adm-filter-row">
+                    <div class="adm-filter-group"><label>Search</label><input type="search" class="adm-input" id="products-search" placeholder="Name or brand"></div>
+                    <div class="adm-filter-group"><label>Category</label><select class="adm-select" id="products-cat-filter"><option value="">All</option></select></div>
+                    <div class="adm-filter-group"><label>Subcategory</label><select class="adm-select" id="products-subcat-filter"><option value="">All</option></select></div>
+                    <div class="adm-filter-group"><label>Stock</label><select class="adm-select" id="products-stock-filter"><option value="">All</option><option value="in">In Stock</option><option value="low">Low Stock</option><option value="out">Out of Stock</option></select></div>
+                    <div class="adm-filter-group"><label>Status</label><select class="adm-select" id="products-active-filter"><option value="active">Active</option><option value="inactive">Inactive</option><option value="all">All</option></select></div>
+                    <div class="adm-filter-group"><label>Sort</label><select class="adm-select" id="products-sort-filter"><option value="none">None</option><option value="name_asc">Name A-Z</option><option value="name_desc">Name Z-A</option><option value="category_asc">Category A-Z</option><option value="category_desc">Category Z-A</option><option value="discount_desc">Discount high-low</option><option value="discount_asc">Discount low-high</option><option value="stock_desc">Stock high-low</option><option value="stock_asc">Stock low-high</option></select></div>
+                    <button type="button" class="adm-btn adm-btn--outline adm-filter-reset" id="products-reset-filters" title="Reset filters">RESET <i class="fa-solid fa-rotate-left"></i></button>
+                </div>
+                <p class="adm-filter-showing" id="products-filter-showing"></p>
+            </div>
+            <div id="bulk-bar" class="bulk-bar hidden">
+                <span id="bulk-count">0 selected on this page</span>
+                <button type="button" class="adm-btn adm-btn--outline adm-btn--sm" data-bulk="activate">Bulk Activate</button>
+                <button type="button" class="adm-btn adm-btn--outline adm-btn--sm" data-bulk="deactivate">Bulk Deactivate</button>
+                <button type="button" class="adm-btn adm-btn--danger-outline adm-btn--sm" data-bulk="delete">Bulk Delete</button>
+            </div>
+            <div class="adm-card" style="padding:0;overflow:hidden">
+                <div class="adm-table-wrap">
+                    <table class="adm-table" id="products-table">
+                        <thead>
+                            <tr>
+                                <th class="no-sort"><input type="checkbox" id="products-select-all"></th>
+                                <th class="no-sort"></th>
+                                <th data-sort="productName">Product</th>
+                                <th data-sort="categoryName">Category</th>
+                                <th data-sort="discountPercent">Discount</th>
+                                <th data-sort="stockQuantity">Stock</th>
+                                <th class="no-sort">Status</th>
+                                <th class="no-sort">Badges</th>
+                                <th class="no-sort">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="adm-pagination" id="products-pagination" style="padding:16px"></div>
+            </div>
+        </section>
+
+        <!-- CATEGORIES -->
+        <section id="section-categories" class="adm-section hidden">
+            <div class="adm-page-header">
+                <div><h1>Categories &amp; Subcategories</h1><p>Manage homepage category tiles and subcategories</p></div>
+                <button type="button" class="adm-btn adm-btn--primary" id="add-category-btn"><i class="fa-solid fa-plus"></i> Add Category</button>
+            </div>
+            <div class="adm-row adm-row--2-35">
+                <div class="adm-card"><div class="cat-list" id="category-list"></div></div>
+                <div class="adm-card">
+                    <div class="adm-card-header">
+                        <h3 id="subcat-panel-title">Subcategories</h3>
+                        <button type="button" class="adm-btn adm-btn--primary adm-btn--sm" id="add-subcategory-btn"><i class="fa-solid fa-plus"></i> Add Subcategory</button>
+                    </div>
+                    <div class="adm-table-wrap">
+                        <table class="adm-table" id="subcategories-table">
+                            <thead><tr><th>Name</th><th>Slug</th><th>Products</th><th>Active</th><th></th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SPOTLIGHT -->
+        <section id="section-spotlight" class="adm-section hidden">
+            <div class="adm-page-header">
+                <div>
+                    <h1>Spotlight</h1>
+                    <p id="spotlight-subtitle">Manage homepage product strips and featured testimonials</p>
+                </div>
+            </div>
+            <div class="spotlight-grid" id="spotlight-grid"></div>
+        </section>
+
+        <!-- BANNERS -->
+        <section id="section-banners" class="adm-section hidden">
+            <div class="adm-page-header">
+                <div><h1>Banners &amp; Hero Slides</h1><p>Homepage hero images — link each slide to a category, subcategory, or spotlight section</p></div>
+                <button type="button" class="adm-btn adm-btn--primary" id="add-banner-btn"><i class="fa-solid fa-plus"></i> Add Banner</button>
+            </div>
+            <div class="banner-rows">
+                <div class="banner-row">
+                    <h2 class="banner-row-title">Active banners</h2>
+                    <p class="banner-row-hint">Shown on the homepage hero carousel.</p>
+                    <div class="banner-scroll" id="banner-scroll-active"></div>
+                </div>
+                <div class="banner-row">
+                    <h2 class="banner-row-title">Inactive banners</h2>
+                    <p class="banner-row-hint">Hidden from the storefront until you turn Active back on.</p>
+                    <div class="banner-scroll" id="banner-scroll-inactive"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CULTURES -->
+        <section id="section-cultures" class="adm-section hidden">
+            <div class="adm-page-header">
+                <div><h1>Cultures</h1><p>Top Categories culture carousel — 390×160 banners shown above category cards on the homepage</p></div>
+                <button type="button" class="adm-btn adm-btn--primary" id="add-culture-btn"><i class="fa-solid fa-plus"></i> Add Culture Banner</button>
+            </div>
+            <div class="banner-rows">
+                <div class="banner-row">
+                    <h2 class="banner-row-title">Active culture banners</h2>
+                    <p class="banner-row-hint">Shown in the homepage Cultures carousel.</p>
+                    <div class="banner-scroll" id="culture-scroll-active"></div>
+                </div>
+                <div class="banner-row">
+                    <h2 class="banner-row-title">Inactive culture banners</h2>
+                    <p class="banner-row-hint">Hidden from the storefront until you turn Active back on.</p>
+                    <div class="banner-scroll" id="culture-scroll-inactive"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section id="section-testimonials" class="adm-section hidden">
+            <div class="adm-page-header">
+                <div><h1>Customer Testimonials</h1><p id="testimonials-subtitle">Loading…</p></div>
+                <button type="button" class="adm-btn adm-btn--primary" id="add-testimonial-btn"><i class="fa-solid fa-plus"></i> Add Testimonial</button>
+            </div>
+            <div class="adm-card" style="padding:0">
+                <div class="adm-table-wrap">
+                    <table class="adm-table" id="testimonials-table">
+                        <thead><tr><th>Customer</th><th>Avatar</th><th>Rating</th><th>Quote</th><th>Featured</th><th>Order</th><th></th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEWSLETTER -->
+        <section id="section-newsletter" class="adm-section hidden">
+            <div class="adm-page-header">
+                <div><h1>Newsletter Subscribers</h1><p id="newsletter-subtitle">Loading…</p></div>
+                <div class="adm-page-actions">
+                    <button type="button" class="adm-btn adm-btn--blue" id="export-newsletter-btn"><i class="fa-solid fa-download"></i> Export CSV</button>
+                    <button type="button" class="adm-btn adm-btn--primary" id="add-newsletter-btn"><i class="fa-solid fa-plus"></i> Add Subscriber</button>
+                </div>
+            </div>
+            <div class="stat-mini-grid" id="newsletter-stats"></div>
+            <div class="adm-card" style="padding:0">
+                <div class="adm-table-wrap">
+                    <table class="adm-table" id="newsletter-table">
+                        <thead><tr><th>Email</th><th>Subscribed</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT MESSAGES -->
+        <section id="section-contact-messages" class="adm-section hidden">
+            <div class="adm-page-header">
+                <div><h1>Contact Messages</h1><p id="contact-messages-subtitle">Loading…</p></div>
+            </div>
+            <div class="adm-card" style="padding:0">
+                <div class="adm-table-wrap">
+                    <table class="adm-table" id="contact-messages-table">
+                        <thead><tr><th>Date</th><th>Name</th><th>Email</th><th>Phone</th><th>Subject</th><th>Message</th><th>Status</th><th>Actions</th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- DISCOUNTS -->
+        <section id="section-discounts" class="adm-section hidden">
+            <div class="adm-page-header">
+                <div><h1>Discounts &amp; Offers</h1><p>Set discount badges shown on the customer storefront</p></div>
+                <button type="button" class="adm-btn adm-btn--danger-outline" id="clear-discounts-btn">Clear All Discounts</button>
+            </div>
+            <div class="adm-card">
+                <h3 style="margin-bottom:12px">Create Bulk Discount</h3>
+                <div class="adm-filter-row">
+                    <div class="adm-filter-group"><label>Category</label><select class="adm-select" id="discount-cat"><option value="">Select…</option></select></div>
+                    <div class="adm-filter-group"><label>Subcategory</label><select class="adm-select" id="discount-subcat"><option value="">All in category</option></select></div>
+                    <div class="adm-filter-group"><label>Discount %</label><input type="number" class="adm-input" id="discount-pct" min="0" max="100" value="10"></div>
+                    <button type="button" class="adm-btn adm-btn--primary" id="apply-bulk-discount">Apply Discount</button>
+                </div>
+            </div>
+            <div class="adm-card" style="padding:0">
+                <div class="adm-card-header" style="padding:16px 20px 0"><h3>Currently Discounted Products</h3></div>
+                <div class="adm-table-wrap">
+                    <table class="adm-table" id="discounted-table">
+                        <thead><tr><th>Product</th><th>Category</th><th>Discount</th><th></th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- COUPONS -->
+        <section id="section-coupons" class="adm-section hidden">
+            <div class="adm-page-header">
+                <div><h1>Promo Coupons</h1><p>Discount codes customers can apply at checkout</p></div>
+                <button type="button" class="adm-btn adm-btn--primary" id="add-coupon-btn"><i class="fa-solid fa-plus"></i> Add Coupon</button>
+            </div>
+            <div class="adm-card" style="padding:0">
+                <div class="adm-table-wrap">
+                    <table class="adm-table" id="coupons-table">
+                        <thead><tr><th>Code</th><th>Type</th><th>Value</th><th>Min order</th><th>Active</th><th></th></tr></thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SETTINGS -->
+        <section id="section-settings" class="adm-section hidden">
+            <div class="adm-page-header">
+                <div>
+                    <h1>Store Settings</h1>
+                    <p>Contact details, opening hours, content and media shown on the customer site</p>
+                </div>
+                <button type="button" class="adm-btn adm-btn--primary" id="save-settings-btn"><i class="fa-solid fa-floppy-disk"></i> Save Settings</button>
+            </div>
+            <div id="settings-form"></div>
+        </section>
+    </main>
+</div>
+
+<!-- LOADING -->
+<div id="loading-overlay" class="loading-overlay hidden"><div class="spinner"></div></div>
+
+<!-- TOASTS -->
+<div id="toast-container" class="toast-container"></div>
+
+<!-- CONFIRM MODAL -->
+<div id="confirm-modal" class="modal-backdrop hidden">
+    <div class="modal">
+        <div class="modal-header"><h3 id="confirm-title">Confirm</h3><button type="button" class="modal-close-btn confirm-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button></div>
+        <div class="modal-body"><p id="confirm-message"></p></div>
+        <div class="modal-footer">
+            <button type="button" class="adm-btn adm-btn--outline" id="confirm-cancel">Cancel</button>
+            <button type="button" class="adm-btn adm-btn--danger" id="confirm-ok">Delete</button>
+        </div>
+    </div>
+</div>
+
+<!-- PRODUCT MODAL -->
+<div id="product-modal" class="modal-backdrop hidden">
+    <div class="modal modal--product">
+        <div class="modal-header">
+            <h3 id="product-panel-title">Add Product</h3>
+            <button type="button" class="modal-close-btn product-panel-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="modal-body modal-body--scroll">
+        <div class="adm-tabs" id="product-tabs">
+            <button type="button" class="adm-tab active" data-tab="details">Details</button>
+            <button type="button" class="adm-tab" data-tab="pricing">Discount &amp; Stock</button>
+            <button type="button" class="adm-tab" data-tab="images">Images</button>
+            <button type="button" class="adm-tab" data-tab="visibility">Visibility &amp; Badges</button>
+        </div>
+        <div class="product-tab-stage">
+        <div id="tab-details" class="adm-tab-panel form-grid">
+            <div class="form-field"><label for="pf-name">Product Name *</label><input type="text" class="adm-input" id="pf-name"></div>
+            <div class="form-field"><label for="pf-brand">Brand</label><input type="text" class="adm-input" id="pf-brand" list="brand-list"><datalist id="brand-list"></datalist></div>
+            <div class="form-grid form-grid--2">
+                <div class="form-field"><label for="pf-category">Category *</label><select class="adm-select" id="pf-category"></select></div>
+                <div class="form-field"><label for="pf-subcategory">Subcategory *</label><select class="adm-select" id="pf-subcategory"></select></div>
+            </div>
+            <div class="form-grid form-grid--2">
+                <div class="form-field"><label for="pf-unit">Unit Label</label><input type="text" class="adm-input" id="pf-unit" placeholder="10 Kg"></div>
+                <div class="form-field"><label for="pf-weight">Weight (KG)</label><input type="number" class="adm-input" id="pf-weight" step="0.01"></div>
+            </div>
+            <div class="form-field"><label for="pf-description">Description</label><textarea class="adm-textarea" id="pf-description"></textarea></div>
+        </div>
+        <div id="tab-pricing" class="adm-tab-panel form-grid hidden">
+            <div class="form-field">
+                <label for="pf-discount">Discount %</label>
+                <p class="form-hint" style="margin:0 0 8px">Shown as a badge on the customer site (e.g. -15%). No prices are displayed on the storefront.</p>
+                <div class="inline-field-row">
+                    <input type="number" class="adm-input" id="pf-discount" min="0" max="100" placeholder="0">
+                    <span class="badge badge--pink" id="pf-discount-preview"></span>
+                </div>
+            </div>
+            <div class="form-grid form-grid--2">
+                <div class="form-field"><label for="pf-stock">Stock Quantity</label><input type="number" class="adm-input" id="pf-stock" min="0"></div>
+                <div class="form-field"><label for="pf-min-qty">Min Order Qty</label><input type="number" class="adm-input" id="pf-min-qty" min="1" value="1"></div>
+            </div>
+            <div class="toggle-row">
+                <span>Wholesale Item</span>
+                <label class="toggle"><input type="checkbox" id="pf-wholesale"><span class="toggle-slider"></span></label>
+            </div>
+        </div>
+        <div id="tab-images" class="adm-tab-panel hidden">
+            <div class="product-images-section">
+                <div class="form-field">
+                    <label>Upload from computer</label>
+                    <div class="image-upload-row">
+                        <input type="file" id="pf-image-file" accept="image/jpeg,image/png,image/webp,image/gif" multiple hidden>
+                        <button type="button" class="adm-btn adm-btn--outline" id="pf-image-upload-btn">
+                            <i class="fa-solid fa-upload"></i> Choose files
+                        </button>
+                        <span class="form-hint" style="margin:0">JPG, PNG, WebP or GIF — multiple allowed</span>
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label for="pf-image-url">Or paste image URL</label>
+                    <div class="inline-field-row">
+                        <input type="url" class="adm-input" id="pf-image-url" placeholder="https://…">
+                        <button type="button" class="adm-btn adm-btn--primary adm-btn--sm" id="pf-image-url-add">Add URL</button>
+                    </div>
+                </div>
+                <p class="form-hint">A product can have one or more images. Mark one as primary for the storefront.</p>
+                <p id="pf-images-save-hint" class="form-hint pf-images-save-hint hidden">Save the product first to upload images, or add files now — they will upload when you save.</p>
+                <div id="pf-image-gallery" class="product-image-gallery" aria-live="polite"></div>
+            </div>
+        </div>
+        <div id="tab-visibility" class="adm-tab-panel hidden">
+            <div class="toggle-row"><span>Active</span><label class="toggle"><input type="checkbox" id="pf-active" checked><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><span>Featured</span><label class="toggle"><input type="checkbox" id="pf-featured"><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><span>Best Seller</span><label class="toggle"><input type="checkbox" id="pf-best"><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><span><i class="fa-solid fa-wand-magic-sparkles" style="margin-right:6px;color:var(--adm-green)"></i>New Arrival</span><label class="toggle"><input type="checkbox" id="pf-new"><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><span>Hot Offer</span><label class="toggle"><input type="checkbox" id="pf-hot"><span class="toggle-slider"></span></label></div>
+            <div class="toggle-row"><span>Exclusive</span><label class="toggle"><input type="checkbox" id="pf-exclusive"><span class="toggle-slider"></span></label></div>
+            <div class="form-field" style="margin-top:16px">
+                <label for="pf-kitchen-culture">Kitchen culture</label>
+                <select class="adm-select" id="pf-kitchen-culture">
+                    <option value="">None</option>
+                </select>
+                <p class="form-hint">Assigns this product to a kitchen filter on the products page (Asian, Chinese, British, etc.).</p>
+            </div>
+            <p class="form-hint">Changes here control which homepage sections this product appears in on the live site.</p>
+        </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="adm-btn adm-btn--danger" id="delete-product-btn" style="margin-right:auto;display:none">
+                <i class="fa-solid fa-trash"></i> Delete Product
+            </button>
+            <button type="button" class="adm-btn adm-btn--outline product-panel-close">Cancel</button>
+            <button type="button" class="adm-btn adm-btn--primary" id="save-product-btn">Save Product</button>
+        </div>
+    </div>
+</div>
+
+<!-- CULTURE MODAL -->
+<div id="culture-modal" class="modal-backdrop hidden">
+    <div class="modal modal--culture">
+        <div class="modal-header">
+            <h3 id="culture-modal-title">Edit Culture Banner</h3>
+            <div class="modal-header-actions">
+                <div class="modal-header-active">
+                    <span class="modal-active-label" id="culture-modal-active-state">Active</span>
+                    <label class="toggle"><input type="checkbox" id="m-cul-active"><span class="toggle-slider"></span></label>
+                </div>
+                <button type="button" class="modal-close-btn" id="culture-modal-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div class="modal-body modal-body--scroll">
+            <div class="adm-tabs" id="culture-tabs">
+                <button type="button" class="adm-tab active" data-ctab="products">Product List</button>
+                <button type="button" class="adm-tab" data-ctab="image">Culture Image</button>
+            </div>
+            <div class="culture-tab-stage">
+                <!-- TAB: Product List -->
+                <div id="ctab-products" class="adm-tab-panel">
+                    <div class="culture-products-header">
+                        <p class="form-hint" id="culture-products-hint">Products assigned to this culture filter on the storefront.</p>
+                        <div class="culture-products-search-row">
+                            <input type="text" class="adm-input adm-input--sm" id="culture-product-search" placeholder="Search products to add…">
+                            <button type="button" class="adm-btn adm-btn--primary adm-btn--sm" id="culture-product-add-btn"><i class="fa-solid fa-plus"></i> Add Product</button>
+                        </div>
+                        <div id="culture-product-search-results" class="culture-search-dropdown hidden"></div>
+                    </div>
+                    <div class="adm-table-wrap spotlight-table-wrap" id="culture-products-table-wrap">
+                        <table class="adm-table" id="culture-products-table">
+                            <thead><tr>
+                                <th class="no-sort spotlight-col-thumb"></th>
+                                <th class="no-sort">Product</th>
+                                <th class="no-sort">Category</th>
+                                <th class="no-sort">Actions</th>
+                            </tr></thead>
+                            <tbody id="culture-products-tbody"><tr><td colspan="4" class="adm-table-loading">Select a kitchen culture to load products</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- TAB: Culture Image -->
+                <div id="ctab-image" class="adm-tab-panel hidden">
+                    <div class="form-grid">
+                        <div class="form-field form-field--full"><label>Title</label><input class="adm-input" id="m-cul-title" placeholder="e.g. Asian Kitchen"></div>
+                        <div class="form-field form-field--full">
+                            <label>Kitchen Culture <span class="form-hint" style="display:inline;margin:0">(links banner to product filter)</span></label>
+                            <select class="adm-select" id="m-cul-kitchen-key">
+                                <option value="">— None —</option>
+                            </select>
+                        </div>
+                        <div class="form-field form-field--full">
+                            <label>Upload from computer</label>
+                            <div class="image-upload-row">
+                                <input type="file" id="m-cul-image-file" accept="image/jpeg,image/png,image/webp,image/gif" hidden>
+                                <button type="button" class="adm-btn adm-btn--outline" id="m-cul-image-upload-btn"><i class="fa-solid fa-upload"></i> Choose file</button>
+                                <span class="form-hint" style="margin:0">JPG, PNG, WebP or GIF</span>
+                            </div>
+                        </div>
+                        <div class="form-field form-field--full">
+                            <label>Or paste image URL</label>
+                            <input class="adm-input" id="m-cul-img" placeholder="https://…">
+                            <p class="form-hint">Recommended 390×160. Uploads are stored on Cloudinary.</p>
+                        </div>
+                        <div id="m-cul-image-preview" class="banner-image-preview hidden"></div>
+                        <div class="form-field form-field--full">
+                            <label>Click destination (link URL)</label>
+                            <input class="adm-input" id="m-cul-link" placeholder="products.html">
+                        </div>
+                        <div class="form-field"><label>Display order</label><input type="number" class="adm-input" id="m-cul-order" min="0" value="0"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="adm-btn adm-btn--danger" id="culture-modal-delete" style="margin-right:auto;display:none"><i class="fa-solid fa-trash"></i> Delete Culture</button>
+            <button type="button" class="adm-btn adm-btn--outline" id="culture-modal-cancel">Cancel</button>
+            <button type="button" class="adm-btn adm-btn--primary" id="culture-modal-save">Save Culture</button>
+        </div>
+    </div>
+</div>
+
+<!-- GENERIC MODAL -->
+<div id="generic-modal" class="modal-backdrop hidden">
+    <div class="modal">
+        <div class="modal-header">
+            <h3 id="generic-modal-title">Modal</h3>
+            <div class="modal-header-actions">
+                <div class="modal-header-active hidden" id="generic-modal-active-wrap">
+                    <span class="modal-active-label" id="generic-modal-active-state">Active</span>
+                    <label class="toggle"><input type="checkbox" id="m-ban-active"><span class="toggle-slider"></span></label>
+                </div>
+                <button type="button" class="modal-close-btn generic-modal-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+        <div class="modal-body modal-body--scroll" id="generic-modal-body"></div>
+        <div class="modal-footer">
+            <button type="button" class="adm-btn adm-btn--danger hidden" id="generic-modal-delete"><i class="fa-solid fa-trash"></i> Delete Banner</button>
+            <div class="modal-footer-right">
+                <button type="button" class="adm-btn adm-btn--outline generic-modal-close">Cancel</button>
+                <button type="button" class="adm-btn adm-btn--primary" id="generic-modal-save">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/site-settings.js?v=3"></script>
+<script src="js/admin-api.js?v=21"></script>
+<script src="js/admin.js?v=45"></script>
+</body>
+</html>

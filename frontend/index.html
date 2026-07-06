@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GMS World Foods Ltd — Quality Groceries, West Drayton</title>
+    <meta name="description" content="GMS World Foods Ltd, West Drayton. Browse 4,300+ world food products. Add to your basket and order quickly on WhatsApp.">
+    <link rel="icon" href="https://res.cloudinary.com/dgsnwhyah/image/upload/v1782933745/gms-world-foods/company-logo.png" type="image/png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css?v=57">
+    <script>
+    (function () {
+        try {
+            if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+        } catch (e) {}
+    })();
+    </script>
+</head>
+<body data-page="home">
+    <script>
+    (function () {
+        try {
+            if (location.hash) {
+                history.replaceState(null, '', location.pathname + location.search);
+            }
+            window.scrollTo(0, 0);
+        } catch (e) {}
+    })();
+    </script>
+
+    <!-- TOP BAR -->
+    <div class="topbar">
+        <div class="container topbar-inner">
+            <div class="topbar-left">
+                <a href="about.html">About</a>
+                <span class="topbar-sep" aria-hidden="true">|</span>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            <div class="topbar-right">
+                <span>Need help? Call Us: <a href="tel:01895476737" class="site-store-phone">01895 476737</a></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-stack" id="header-stack">
+        <header id="site-header" class="site-header">
+            <div class="header-inner container">
+                <a href="index.html" class="logo" aria-label="GMS World Foods home">
+                    <div class="logo-badge">
+                        <img src="https://res.cloudinary.com/dgsnwhyah/image/upload/v1782933745/gms-world-foods/company-logo.png" alt="" class="logo-img" width="48" height="48">
+                    </div>
+                    <div class="logo-text-wrap">
+                        <span class="logo-name site-store-name">GMS World Foods</span>
+                        <span class="logo-sub site-store-tagline">Wholesale &amp; Retail</span>
+                    </div>
+                </a>
+
+                <div class="header-search-wrapper">
+                    <div class="header-search">
+                        <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+                        <input type="search" id="header-search" placeholder="Search 4,350+ products..." aria-label="Search products" autocomplete="off">
+                        <button type="button" id="search-clear" class="search-clear" aria-label="Clear search">
+                            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    <div id="search-dropdown" class="search-dropdown" aria-hidden="true"></div>
+                </div>
+
+                <div class="header-actions">
+                    <a href="basket.html" class="header-action" id="header-basket" title="My Basket">
+                        <i class="fa-solid fa-basket-shopping" aria-hidden="true"></i>
+                        <span class="header-action-label">Basket</span>
+                        <span class="header-action-badge" id="basket-count">0</span>
+                    </a>
+                    <a href="/admin" class="header-action header-action--admin" id="header-admin" title="Admin Portal">
+                        <i class="fa-solid fa-user-shield" aria-hidden="true"></i>
+                        <span class="header-action-label">Admin</span>
+                    </a>
+                    <button type="button" id="mobile-menu-toggle" class="mobile-menu-toggle" aria-label="Open menu" aria-expanded="false">
+                        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- BROWSE ALL CATEGORIES BAR -->
+        <div class="browse-bar">
+            <div class="container browse-bar-inner">
+                <div class="browse-cat-wrap" id="subnav-categories-wrap">
+                    <button type="button" class="browse-cat-btn" id="subnav-categories-btn"
+                        aria-expanded="false" aria-controls="subnav-cat-dropdown" aria-haspopup="true">
+                        <i class="fa-solid fa-border-all" aria-hidden="true"></i>
+                        Browse All Categories
+                        <i class="fa-solid fa-chevron-down sub-nav-chevron" aria-hidden="true"></i>
+                    </button>
+                    <div class="sub-nav-dropdown" id="subnav-cat-dropdown" role="menu"></div>
+                </div>
+                <nav class="browse-nav-links" aria-label="Main navigation">
+                    <a href="products.html" class="browse-nav-link">All Products</a>
+                    <a href="#categories" class="browse-nav-link browse-nav-link--section">Top Categories</a>
+                    <a href="#cultures" class="browse-nav-link browse-nav-link--section">Cultures</a>
+                    <a href="#featured-products" class="browse-nav-link browse-nav-link--section">Featured products</a>
+                    <a href="#best-sellers" class="browse-nav-link browse-nav-link--section">Best Sellers</a>
+                    <a href="#new-arrivals" class="browse-nav-link browse-nav-link--section">New Arrivals</a>
+                    <a href="#hot-offers" class="browse-nav-link browse-nav-link--section">Hot Offers</a>
+                    <a href="#exclusive-products" class="browse-nav-link browse-nav-link--section">Exclusive products</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOBILE DRAWER -->
+    <div id="drawer-overlay" class="drawer-overlay"></div>
+    <aside id="mobile-drawer" class="mobile-drawer" aria-label="Mobile navigation">
+        <div class="drawer-header">
+            <div class="logo-badge">
+                <img src="https://res.cloudinary.com/dgsnwhyah/image/upload/v1782933745/gms-world-foods/company-logo.png" alt="GMS World Foods" class="logo-img" width="40" height="40">
+            </div>
+            <button type="button" id="drawer-close" class="drawer-close" aria-label="Close menu">
+                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+        </div>
+        <nav class="drawer-nav">
+            <a href="index.html"><i class="fa-solid fa-house"></i> Home</a>
+            <a href="products.html"><i class="fa-solid fa-box-open"></i> All Products</a>
+            <a href="basket.html"><i class="fa-solid fa-basket-shopping"></i> Basket</a>
+            <a href="https://wa.me/441895476737" class="site-whatsapp-link" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+            <a href="about.html"><i class="fa-solid fa-circle-info"></i> About</a>
+            <a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact</a>
+        </nav>
+        <div class="drawer-categories">
+            <h3>Shop by Category</h3>
+            <ul id="mobile-category-list"></ul>
+        </div>
+    </aside>
+
+    <main>
+        <!-- HERO CAROUSEL -->
+        <section class="hero-carousel-section" aria-label="Featured promotions">
+            <div class="hero-banner-wrap">
+                <div class="hero-slider" id="hero-slider">
+                    <button type="button" class="hero-slider-btn hero-slider-prev" id="hero-slider-prev" aria-label="Previous slide">
+                        <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                    </button>
+                    <button type="button" class="hero-slider-btn hero-slider-next" id="hero-slider-next" aria-label="Next slide">
+                        <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+                    <div class="hero-slider-dots" id="hero-slider-dots" role="tablist" aria-label="Slide navigation"></div>
+                </div>
+            </div>
+
+            <div class="promo-strip hero-promo-strip" aria-hidden="true">
+                <div class="promo-strip-inner">
+                    <span class="promo-strip-item"><i class="fa-solid fa-box-open"></i> 4,350+ Products In Stock</span>
+                    <span class="promo-strip-item"><i class="fa-solid fa-layer-group"></i> 9 Categories · 48 Subcategories</span>
+                    <span class="promo-strip-item"><i class="fa-solid fa-globe"></i> World Foods Specialist</span>
+                    <span class="promo-strip-item"><i class="fa-solid fa-phone"></i> <span class="site-promo-phone">Call 01895 476737</span></span>
+                    <span class="promo-strip-item"><i class="fa-solid fa-location-dot"></i> <span class="site-promo-address">88–90 High Street, West Drayton</span></span>
+                    <span class="promo-strip-item"><i class="fa-solid fa-handshake"></i> Wholesale &amp; Retail</span>
+                    <span class="promo-strip-item"><i class="fa-solid fa-box-open"></i> 4,350+ Products In Stock</span>
+                    <span class="promo-strip-item"><i class="fa-solid fa-layer-group"></i> 9 Categories · 48 Subcategories</span>
+                    <span class="promo-strip-item"><i class="fa-solid fa-globe"></i> World Foods Specialist</span>
+                    <span class="promo-strip-item"><i class="fa-solid fa-phone"></i> <span class="site-promo-phone">Call 01895 476737</span></span>
+                    <span class="promo-strip-item"><i class="fa-solid fa-location-dot"></i> <span class="site-promo-address">88–90 High Street, West Drayton</span></span>
+                    <span class="promo-strip-item"><i class="fa-solid fa-handshake"></i> Wholesale &amp; Retail</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- TOP CATEGORIES -->
+        <section id="categories" class="section top-categories-section home-scroll-target">
+            <div class="container container--top-cat">
+                <div class="top-cat-header fade-in-section">
+                    <h2>Top Categories</h2>
+                    <div class="top-cat-nav-btns">
+                        <button type="button" class="top-cat-nav-btn" id="top-cat-prev" aria-label="Scroll categories left">
+                            <i class="fa-solid fa-chevron-left" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="top-cat-nav-btn" id="top-cat-next" aria-label="Scroll categories right">
+                            <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="top-cat-carousel-wrap fade-in-section">
+                    <div class="top-cat-carousel" id="top-cat-carousel"></div>
+                </div>
+                <div id="cultures" class="top-cat-cultures-viewport home-scroll-target fade-in-section">
+                    <div class="top-cat-banners top-cat-banners--cultures" id="top-cat-banners-top"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FEATURED PRODUCTS -->
+        <section id="featured-products" class="section featured-products-section home-scroll-target">
+            <div class="container container--top-cat">
+                <div class="top-cat-header fade-in-section">
+                    <div class="top-cat-header-text">
+                        <h2>Featured products</h2>
+                        <p class="section-subtitle">Discover our handpicked selection of top-quality products chosen just for you.</p>
+                    </div>
+                </div>
+                <div class="fp-grid fade-in-section" id="featured-products-grid"></div>
+            </div>
+        </section>
+
+        <!-- BEST SELLERS -->
+        <section id="best-sellers" class="section featured-products-section featured-products-section--follow home-scroll-target">
+            <div class="container container--top-cat">
+                <div class="top-cat-header fade-in-section">
+                    <div class="top-cat-header-text">
+                        <h2>Best Sellers</h2>
+                        <p class="section-subtitle">Shop our most-loved products trusted and purchased by customers every day.</p>
+                    </div>
+                </div>
+                <div class="fp-grid fade-in-section" id="best-sellers-grid"></div>
+            </div>
+        </section>
+
+        <!-- NEW ARRIVALS -->
+        <section id="new-arrivals" class="section featured-products-section featured-products-section--follow home-scroll-target">
+            <div class="container container--top-cat">
+                <div class="top-cat-header fade-in-section">
+                    <div class="top-cat-header-text">
+                        <h2>New Arrivals</h2>
+                        <p class="section-subtitle">Be the first to explore our latest additions, fresh on the shelves.</p>
+                    </div>
+                </div>
+                <div class="fp-grid fade-in-section" id="new-arrivals-grid"></div>
+            </div>
+        </section>
+
+        <!-- HOT OFFERS -->
+        <section id="hot-offers" class="section featured-products-section featured-products-section--follow home-scroll-target">
+            <div class="container container--top-cat">
+                <div class="top-cat-header fade-in-section">
+                    <div class="top-cat-header-text">
+                        <h2>Hot Offers</h2>
+                        <p class="section-subtitle">Enjoy unbeatable deals and limited-time discounts on your favorite products.</p>
+                    </div>
+                </div>
+                <div class="fp-grid fade-in-section" id="hot-offers-grid"></div>
+            </div>
+        </section>
+
+        <!-- TOP CAT BANNERS -->
+        <section class="section top-cat-banners-section">
+            <div class="container container--top-cat">
+                <div class="top-cat-banners fade-in-section" id="top-cat-banners-bottom"></div>
+            </div>
+        </section>
+
+        <!-- EXCLUSIVE PRODUCTS -->
+        <section id="exclusive-products" class="section featured-products-section featured-products-section--follow home-scroll-target">
+            <div class="container container--top-cat">
+                <div class="top-cat-header fade-in-section">
+                    <div class="top-cat-header-text">
+                        <h2>Exclusive products</h2>
+                        <p class="section-subtitle">Explore unique products available only through our carefully curated collection.</p>
+                    </div>
+                </div>
+                <div class="fp-grid fade-in-section" id="exclusive-products-grid"></div>
+            </div>
+        </section>
+
+        <!-- CUSTOMER TESTIMONIALS -->
+        <section class="section testimonials-section">
+            <div class="container container--top-cat">
+                <div class="section-header fade-in-section">
+                    <h2>Customer Testimonials</h2>
+                    <p>Real reviews from customers who love our quality, great value, and authentic world-food favourites.</p>
+                </div>
+                <div class="testimonials-carousel fade-in-section" id="testimonials-carousel"></div>
+            </div>
+        </section>
+
+        <!-- NEWSLETTER BANNER -->
+        <section class="section newsletter-banner-section">
+            <div class="container container--top-cat">
+                <div class="newsletter-banner fade-in-section">
+                    <div class="newsletter-banner__content">
+                        <h2 class="newsletter-banner__title">Stay home &amp; get your daily needs from GMS World Foods</h2>
+                        <p class="newsletter-banner__subtitle">Start your daily shopping with GMS World Foods</p>
+                        <form class="newsletter-form" id="newsletter-form" novalidate>
+                            <div class="newsletter-form__wrap">
+                                <i class="fa-regular fa-paper-plane newsletter-form__icon" aria-hidden="true"></i>
+                                <input type="email" class="newsletter-form__input" id="newsletter-email" name="email"
+                                    placeholder="Enter Your Email" autocomplete="email" required>
+                                <button type="submit" class="newsletter-form__btn">Subscribe</button>
+                            </div>
+                            <p class="newsletter-form__feedback" id="newsletter-feedback" role="status" aria-live="polite"></p>
+                        </form>
+                    </div>
+                    <div class="newsletter-banner__visual" aria-hidden="true">
+                        <img src="https://res.cloudinary.com/dgsnwhyah/image/upload/v1782933748/gms-world-foods/newsletter/visual.webp"
+                            alt="" class="newsletter-banner__visual-img" loading="lazy" decoding="async">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICE FEATURES -->
+        <section class="section service-features-section">
+            <div class="container container--top-cat">
+                <div class="service-features fade-in-section">
+                    <article class="service-feature-card">
+                        <div class="service-feature-icon">
+                            <i class="fa-solid fa-truck-fast" aria-hidden="true"></i>
+                        </div>
+                        <div class="service-feature-text">
+                            <h3>Local Delivery</h3>
+                            <p class="site-delivery-area">West Drayton &amp; surrounding areas</p>
+                        </div>
+                    </article>
+                    <article class="service-feature-card">
+                        <div class="service-feature-icon">
+                            <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+                        </div>
+                        <div class="service-feature-text">
+                            <h3>Order on WhatsApp</h3>
+                            <p>Quick orders — no online payment</p>
+                        </div>
+                    </article>
+                    <article class="service-feature-card">
+                        <div class="service-feature-icon">
+                            <i class="fa-solid fa-headset" aria-hidden="true"></i>
+                        </div>
+                        <div class="service-feature-text">
+                            <h3>24/7 Support</h3>
+                            <p>Dedicated support</p>
+                        </div>
+                    </article>
+                    <article class="service-feature-card">
+                        <div class="service-feature-icon">
+                            <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+                        </div>
+                        <div class="service-feature-text">
+                            <h3>Schedule Your Delivery</h3>
+                            <p>Schedule Your Order</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT TEASER -->
+        <section class="section section-bg">
+            <div class="container about-teaser-grid">
+                <div class="about-teaser-text fade-in-section">
+                    <h2>About GMS World Foods Ltd</h2>
+                    <div id="site-home-about-teaser">
+                    <p>Located at 88–90 High Street, West Drayton, GMS World Foods Ltd is a dedicated world foods wholesaler and retailer serving local communities and trade customers across the region.</p>
+                    <p>We stock an extensive catalog spanning fresh vegetables, dry goods, rice, confectionery, soft drinks, household essentials, and a wide variety of international specialty products.</p>
+                    </div>
+                    <a href="about.html" class="btn btn-primary" style="margin-top:8px">
+                        <i class="fa-solid fa-circle-info"></i> Learn More
+                    </a>
+                </div>
+                <div class="about-teaser-stats fade-in-section">
+                    <div class="teaser-stat-box">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <span class="teaser-stat-value" id="teaser-products">4,300+</span>
+                        <span class="teaser-stat-label">Total Products</span>
+                    </div>
+                    <div class="teaser-stat-box">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <span class="teaser-stat-value" id="teaser-categories">9</span>
+                        <span class="teaser-stat-label">Categories</span>
+                    </div>
+                    <div class="teaser-stat-box">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span class="teaser-stat-value site-postcode-label">UB7 7DS</span>
+                        <span class="teaser-stat-label site-city-label">West Drayton</span>
+                    </div>
+                    <div class="teaser-stat-box">
+                        <i class="fa-solid fa-handshake"></i>
+                        <span class="teaser-stat-value">Trade</span>
+                        <span class="teaser-stat-label">Wholesale Available</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="footer-top">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand-col">
+                        <div class="footer-logo">
+                            <div class="logo-badge">
+                                <img src="https://res.cloudinary.com/dgsnwhyah/image/upload/v1782933745/gms-world-foods/company-logo.png" alt="GMS World Foods" class="logo-img" width="52" height="52">
+                            </div>
+                            <div>
+                                <span class="footer-brand-name site-store-name">GMS World Foods Ltd</span>
+                                <span class="footer-brand-sub site-store-tagline">Wholesale &amp; Retail</span>
+                            </div>
+                        </div>
+                        <p class="footer-desc site-footer-desc">Your local world foods specialist in West Drayton — stocking quality groceries from across the globe for retail and wholesale customers.</p>
+                        <div class="footer-contact-items">
+                            <div class="footer-contact-item">
+                                <i class="fa-solid fa-location-dot"></i>
+                                <span class="site-footer-address">88–90 High Street, West Drayton, UB7 7DS</span>
+                            </div>
+                            <div class="footer-contact-item">
+                                <i class="fa-solid fa-phone"></i>
+                                <span><a href="tel:01895476737" class="site-store-phone" style="color:inherit">01895 476737</a></span>
+                            </div>
+                            <div class="footer-contact-item">
+                                <i class="fa-regular fa-clock"></i>
+                                <span class="site-footer-hours">Open Daily — Mon to Sun</span>
+                            </div>
+                        </div>
+                        <div id="site-footer-social" class="footer-social hidden"></div>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Quick Links</h4>
+                        <div class="footer-links">
+                            <a href="index.html"><i class="fa-solid fa-chevron-right"></i> Home</a>
+                            <a href="index.html#categories"><i class="fa-solid fa-chevron-right"></i> Categories</a>
+                            <a href="products.html"><i class="fa-solid fa-chevron-right"></i> All Products</a>
+                            <a href="basket.html"><i class="fa-solid fa-chevron-right"></i> Basket</a>
+                            <a href="about.html"><i class="fa-solid fa-chevron-right"></i> About Us</a>
+                            <a href="contact.html"><i class="fa-solid fa-chevron-right"></i> Contact</a>
+                        </div>
+                    </div>
+                    <div class="footer-col">
+                        <h4>Top Categories</h4>
+                        <div id="footer-cat-list" class="footer-cat-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 GMS World Foods Ltd. All rights reserved. Registered in England &amp; Wales.</p>
+            </div>
+        </div>
+    </footer>
+
+    <button type="button" id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <i class="fa-solid fa-chevron-up" aria-hidden="true"></i>
+    </button>
+
+    <!-- MODAL -->
+    <div id="product-modal-overlay" class="modal-overlay">
+        <div id="product-modal" class="product-modal" role="dialog" aria-modal="true"></div>
+    </div>
+
+    <!-- WHATSAPP FLOATING BUTTON -->
+    <a href="https://wa.me/441895476737" class="whatsapp-fab site-whatsapp-link" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+        <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+    </a>
+
+    <script src="js/site-settings.js?v=1"></script>
+    <script src="js/placeholders.js?v=3"></script>
+    <script src="js/product-card.js?v=6"></script>
+    <script src="js/data-loader.js?v=7"></script>
+    <script src="js/filters.js"></script>
+    <script src="js/product-grid.js"></script>
+    <script src="js/search.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/home-sections.js?v=12"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/shopping-store.js?v=6"></script>
+    <script src="js/enhancements.js?v=3"></script>
+    <script src="js/basket.js?v=1"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
+
